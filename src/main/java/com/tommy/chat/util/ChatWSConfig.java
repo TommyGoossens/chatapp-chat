@@ -10,15 +10,24 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 public class ChatWSConfig implements WebSocketMessageBrokerConfigurer {
 
+    /**
+     * Register the app prefix the client sends messages to: serverurl + /app/...
+     * The client can subscribe to the /reply endpoint
+     * @param brokerRegistry
+     */
     @Override
     public void configureMessageBroker(MessageBrokerRegistry brokerRegistry){
         brokerRegistry.setApplicationDestinationPrefixes("/app")
-                .enableSimpleBroker("/topic");
+                .enableSimpleBroker("/reply");
     }
 
+    /**
+     * Register the endpoints the front end can connect to, in this case: serverurl + /chat
+     * @param endpointRegistry
+     */
     @Override
     public void registerStompEndpoints(StompEndpointRegistry endpointRegistry){
-        endpointRegistry.addEndpoint("/chat")
+        endpointRegistry.addEndpoint("/wschat")
                 .setAllowedOrigins("*")
                 .withSockJS();
     }
