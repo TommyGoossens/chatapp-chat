@@ -6,8 +6,6 @@ import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Getter
@@ -24,13 +22,11 @@ public class Message {
 
     private String content;
     private String sender;
-    private String time;
+    private Date time;
     private String mediaURL;
 
     @ManyToOne
     @JoinTable(name = "replymessages")
-//    @JoinColumn(name="original_message_id", referencedColumnName = "id")
-//    @JoinColumn(name="reply_message_id", referencedColumnName = "id")
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private Message isReplyTo;
 
@@ -40,8 +36,7 @@ public class Message {
     }
 
     public void setDate() {
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-        Date date = new Date();
-        this.time = dateFormat.format(date);
+//        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        this.time = new Date();
     }
 }
