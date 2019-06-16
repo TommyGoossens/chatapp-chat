@@ -1,6 +1,6 @@
-version: 2.1
-orbs:
-  sonarqube-analyzer: corballis/sonarqube-analyzer@0.0.1
+version: 2
+#orbs:
+#  sonarqube-analyzer: corballis/sonarqube-analyzer@0.0.1
 jobs:
   build:
     working_directory: ~/chatapp-chat
