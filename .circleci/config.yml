@@ -1,6 +1,4 @@
 version: 2
-#orbs:
-#  sonarqube-analyzer: corballis/sonarqube-analyzer@0.0.1
 jobs:
   build:
     working_directory: ~/chatapp-chat
@@ -16,18 +14,16 @@ jobs:
             - ~/.m2
           key: chatapp-chat-{{checksum "pom.xml"}}
       - run: mvn package
-
       - store_test_results:
           path: target/surefire-reports
 
       - store_artifacts:
           path: target/chatapp-chat-1.0.1-SNAPSHOT.jar
       - run: mvn clean verify sonar:sonar
-
       - setup_remote_docker:
-        docker_layer_caching: true
+          docker_layer_caching: true
       - run:
           name: Build and push Docker image
           command: |
             echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
-            mvn clean compile com.google.cloud.tools:jib-maven-plugin:0.9.7:build -Dimage=tommygoossens/chatapp-eureka:release
+            mvn clean compile com.google.cloud.tools:jib-maven-plugin:0.9.7:build -Dimage=tommygoossens/chatapp-chat:release
